@@ -1,0 +1,4 @@
+spreadsheet url: https://docs.google.com/spreadsheets/d/1_yaP-o4gcgNLf6taVYx3LoKgZfx1THKaHpof4TQndN0/edit?gid=0#gid=0
+
+
+Google client id: 257581505508-8lg77baci647fqqerpm4s0qo0cc008cq.apps.googleusercontent.com
