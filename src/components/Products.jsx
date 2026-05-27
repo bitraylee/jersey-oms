@@ -112,9 +112,9 @@ export default function Products({ token }) {
   );
 
   return (
-    <div className="bg-white shadow-sm rounded-xl border border-slate-200 overflow-hidden">
-      <div className="p-6 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
-        <h2 className="text-xl font-bold text-slate-800">Products Master</h2>
+    <div className="bg-white dark:bg-slate-900 shadow-sm rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden transition-colors duration-200">
+      <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">Products Master</h2>
         <div className="flex gap-4 w-full sm:w-auto">
           <div className="relative w-full sm:w-64">
             <Search className="w-5 h-5 absolute left-3 top-2.5 text-slate-400" />
@@ -123,13 +123,13 @@ export default function Products({ token }) {
               placeholder="Search products..." 
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="pl-10 pr-4 py-2 w-full border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="pl-10 pr-4 py-2 w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white dark:focus:bg-slate-900 transition-colors"
             />
           </div>
           <button 
             onClick={handleCopySupplierList}
             disabled={loading || products.length === 0}
-            className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-sm font-semibold transition-colors disabled:opacity-50 flex items-center justify-center gap-2 shrink-0 shadow-sm"
+            className="px-4 py-2 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white rounded-lg text-sm font-semibold transition-colors disabled:opacity-50 flex items-center justify-center gap-2 shrink-0 shadow-sm"
             title="Copy Supplier List"
           >
             <Copy className="w-4 h-4" />
@@ -138,7 +138,7 @@ export default function Products({ token }) {
           <button 
             onClick={loadProducts}
             disabled={loading}
-            className="p-2 border border-slate-300 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors disabled:opacity-50 flex items-center justify-center shrink-0"
+            className="p-2 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors disabled:opacity-50 flex items-center justify-center shrink-0"
             title="Refresh"
           >
             <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
@@ -148,28 +148,28 @@ export default function Products({ token }) {
       
       <div className="overflow-x-auto">
         {error && (
-          <div className="p-4 m-4 bg-red-50 text-red-600 rounded-lg border border-red-200">
+          <div className="p-4 m-4 bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 rounded-lg border border-red-200 dark:border-red-800">
             {error}
           </div>
         )}
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-slate-50 border-b border-slate-200">
-              <th className="p-4 text-sm font-semibold text-slate-600">Name</th>
-              <th className="p-4 text-sm font-semibold text-slate-600">Year</th>
-              <th className="p-4 text-sm font-semibold text-slate-600">Type</th>
-              <th className="p-4 text-sm font-semibold text-slate-600">Sizes Available</th>
-              <th className="p-4 text-sm font-semibold text-slate-600">Orders Summary</th>
+            <tr className="bg-slate-50 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800">
+              <th className="p-4 text-sm font-semibold text-slate-600 dark:text-slate-400">Name</th>
+              <th className="p-4 text-sm font-semibold text-slate-600 dark:text-slate-400">Year</th>
+              <th className="p-4 text-sm font-semibold text-slate-600 dark:text-slate-400">Type</th>
+              <th className="p-4 text-sm font-semibold text-slate-600 dark:text-slate-400">Sizes Available</th>
+              <th className="p-4 text-sm font-semibold text-slate-600 dark:text-slate-400">Orders Summary</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
             {loading && products.length === 0 ? (
               <tr>
-                <td colSpan="5" className="p-8 text-center text-slate-500">Loading products from Sheets...</td>
+                <td colSpan="5" className="p-8 text-center text-slate-500 dark:text-slate-400">Loading products from Sheets...</td>
               </tr>
             ) : filtered.length === 0 ? (
               <tr>
-                <td colSpan="5" className="p-8 text-center text-slate-500">No products found.</td>
+                <td colSpan="5" className="p-8 text-center text-slate-500 dark:text-slate-400">No products found.</td>
               </tr>
             ) : (
               filtered.map((product, i) => {
@@ -179,18 +179,18 @@ export default function Products({ token }) {
                 const hasFulfilled = Object.keys(fulfilledSizes).length > 0;
                 
                 return (
-                  <tr key={i} className="hover:bg-slate-50/50 transition-colors">
-                    <td className="p-4 font-medium text-slate-800">{product.name}</td>
-                    <td className="p-4 text-slate-600">{product.year}</td>
-                    <td className="p-4 text-slate-600">
-                      <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-700">
+                  <tr key={i} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
+                    <td className="p-4 font-medium text-slate-800 dark:text-slate-100">{product.name}</td>
+                    <td className="p-4 text-slate-600 dark:text-slate-400">{product.year}</td>
+                    <td className="p-4 text-slate-600 dark:text-slate-400">
+                      <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-400 border border-transparent dark:border-blue-900/50">
                         {product.type}
                       </span>
                     </td>
-                    <td className="p-4 text-slate-600">
+                    <td className="p-4 text-slate-600 dark:text-slate-400">
                       <div className="flex gap-1 flex-wrap">
                         {product.sizes.map((s, idx) => (
-                          <span key={idx} className="border border-slate-200 px-2 py-0.5 rounded text-xs bg-white text-slate-600">{s}</span>
+                          <span key={idx} className="border border-slate-200 dark:border-slate-700 px-2 py-0.5 rounded text-xs bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300">{s}</span>
                         ))}
                       </div>
                     </td>
@@ -199,11 +199,11 @@ export default function Products({ token }) {
                         <div className="flex flex-col gap-2">
                           {hasPending && (
                             <div className="flex flex-col gap-1">
-                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Pending</span>
+                              <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Pending</span>
                               <div className="flex gap-1.5 flex-wrap">
                                 {Object.entries(pendingSizes).map(([size, qty]) => (
-                                  <span key={size} className="text-xs font-bold border border-yellow-200 bg-yellow-50 text-yellow-800 px-2 py-0.5 rounded-md shadow-sm">
-                                    <span className="text-amber-700 mr-0.5">{qty}x</span> {size}
+                                  <span key={size} className="text-xs font-bold border border-yellow-200 dark:border-yellow-900/60 bg-yellow-50 dark:bg-yellow-950/20 text-yellow-800 dark:text-yellow-400 px-2 py-0.5 rounded-md shadow-sm">
+                                    <span className="text-amber-700 dark:text-amber-400 mr-0.5">{qty}x</span> {size}
                                   </span>
                                 ))}
                               </div>
@@ -211,11 +211,11 @@ export default function Products({ token }) {
                           )}
                           {hasFulfilled && (
                             <div className="flex flex-col gap-1">
-                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Fulfilled</span>
+                              <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Fulfilled</span>
                               <div className="flex gap-1.5 flex-wrap">
                                 {Object.entries(fulfilledSizes).map(([size, qty]) => (
-                                  <span key={size} className="text-xs font-bold border border-emerald-200 bg-emerald-50 text-emerald-800 px-2 py-0.5 rounded-md shadow-sm">
-                                    <span className="text-emerald-700 mr-0.5">{qty}x</span> {size}
+                                  <span key={size} className="text-xs font-bold border border-emerald-250 dark:border-emerald-900/60 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-400 px-2 py-0.5 rounded-md shadow-sm">
+                                    <span className="text-emerald-750 dark:text-emerald-400 mr-0.5">{qty}x</span> {size}
                                   </span>
                                 ))}
                               </div>
@@ -223,7 +223,7 @@ export default function Products({ token }) {
                           )}
                         </div>
                       ) : (
-                        <span className="text-sm text-slate-400 font-normal">None</span>
+                        <span className="text-sm text-slate-400 dark:text-slate-500 font-normal">None</span>
                       )}
                     </td>
                   </tr>
@@ -236,19 +236,19 @@ export default function Products({ token }) {
       
       {showCopyModal && (
         <div className="fixed inset-0 bg-black/55 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-100 flex flex-col max-h-[85vh]">
-            <div className="px-6 py-4 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-100 dark:border-slate-800 flex flex-col max-h-[85vh]">
+            <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="bg-indigo-100 text-indigo-600 p-2.5 rounded-xl">
+                <div className="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 p-2.5 rounded-xl">
                   <FileText className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-slate-800">Supplier Order List</h3>
-                  <p className="text-xs text-slate-400 font-medium mt-0.5">Copied to your clipboard automatically!</p>
+                  <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100">Supplier Order List</h3>
+                  <p className="text-xs text-slate-400 dark:text-slate-500 font-medium mt-0.5">Copied to your clipboard automatically!</p>
                 </div>
               </div>
               {copySuccess ? (
-                <span className="flex items-center gap-1 text-xs font-semibold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg animate-pulse">
+                <span className="flex items-center gap-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 px-2.5 py-1 rounded-lg animate-pulse">
                   <Check className="w-3.5 h-3.5" />
                   Copied
                 </span>
@@ -259,7 +259,7 @@ export default function Products({ token }) {
                     setCopySuccess(true);
                     setTimeout(() => setCopySuccess(false), 2000);
                   }}
-                  className="flex items-center gap-1 text-xs font-semibold text-slate-600 hover:text-indigo-600 bg-slate-100 hover:bg-indigo-50 border border-slate-200 px-2.5 py-1 rounded-lg transition-colors"
+                  className="flex items-center gap-1 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-750 px-2.5 py-1 rounded-lg transition-colors"
                 >
                   <Copy className="w-3.5 h-3.5" />
                   Copy Again
@@ -267,16 +267,16 @@ export default function Products({ token }) {
               )}
             </div>
             
-            <div className="p-6 overflow-y-auto bg-slate-900/5 flex-1">
-              <pre className="font-mono text-sm text-slate-700 bg-slate-50 border border-slate-200 p-4 rounded-xl whitespace-pre-wrap select-all leading-relaxed shadow-inner max-h-[50vh] overflow-y-auto">
+            <div className="p-6 overflow-y-auto bg-slate-900/5 dark:bg-slate-950/30 flex-1">
+              <pre className="font-mono text-sm text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-4 rounded-xl whitespace-pre-wrap select-all leading-relaxed shadow-inner max-h-[50vh] overflow-y-auto">
                 {copiedText}
               </pre>
             </div>
             
-            <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+            <div className="px-6 py-4 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-100 dark:border-slate-800 flex justify-end">
               <button
                 onClick={() => setShowCopyModal(false)}
-                className="px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl shadow-md shadow-slate-200 transition-colors text-sm"
+                className="px-6 py-2.5 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white font-bold rounded-xl shadow-md dark:shadow-none transition-colors text-sm"
               >
                 Close Preview
               </button>
