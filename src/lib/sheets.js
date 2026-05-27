@@ -36,24 +36,40 @@ export const fetchProducts = async (token) => {
 };
 
 export const fetchOrders = async (token) => {
-  // Assuming Headers: Order ID, Timestamp, Customer Name, Contact Info, Products, Sizes, Quantities, Status
-  const values = await fetchSheetDataRange(token, 'Orders!A2:H');
-  return values.map((row, index) => ({
-    id: row[0] || '',
-    timestamp: row[1] || '',
-    customerName: row[2] || '',
-    contactInfo: row[3] || '',
-    products: row[4] ? JSON.parse(row[4] || '[]') : [],
-    sizes: row[5] ? JSON.parse(row[5] || '[]') : [],
-    quantities: row[6] ? JSON.parse(row[6] || '[]') : [],
-    status: row[7] || '',
-    rowIndex: index + 2, // A2 is row 2
-  }));
+  // Assuming Headers: Order ID, Timestamp, Customer Name, Contact Info, Products, Sizes, Quantities, Status, Item Statuses
+  const values = await fetchSheetDataRange(token, 'Orders!A2:I');
+  return values.map((row, index) => {
+    const products = row[4] ? JSON.parse(row[4] || '[]') : [];
+    let itemStatuses = [];
+    try {
+      itemStatuses = row[8] ? JSON.parse(row[8]) : [];
+    } catch (e) {
+      itemStatuses = [];
+    }
+    
+    // Fallback: If no statuses or mismatched lengths, initialize all to Pending
+    if (!Array.isArray(itemStatuses) || itemStatuses.length !== products.length) {
+      itemStatuses = products.map(() => 'Pending');
+    }
+
+    return {
+      id: row[0] || '',
+      timestamp: row[1] || '',
+      customerName: row[2] || '',
+      contactInfo: row[3] || '',
+      products,
+      sizes: row[5] ? JSON.parse(row[5] || '[]') : [],
+      quantities: row[6] ? JSON.parse(row[6] || '[]') : [],
+      status: row[7] || '',
+      itemStatuses,
+      rowIndex: index + 2, // A2 is row 2
+    };
+  });
 };
 
 // Append a new row to Orders sheet
 export const appendOrder = async (token, order) => {
-  const range = 'Orders!A:H';
+  const range = 'Orders!A:I';
   const values = [
     [
       order.id,
@@ -64,6 +80,7 @@ export const appendOrder = async (token, order) => {
       JSON.stringify(order.sizes),      
       JSON.stringify(order.quantities), 
       order.status,
+      JSON.stringify(order.itemStatuses || order.products.map(() => 'Pending')),
     ]
   ];
 
@@ -97,6 +114,36 @@ export const updateOrderStatus = async (token, rowIndex, newStatus) => {
   if (!response.ok) {
     const errorData = await response.json();
     throw new Error(errorData?.error?.message || "Failed to update order status");
+  }
+
+  return response.json();
+};
+
+export const updateOrder = async (token, rowIndex, order) => {
+  const range = `Orders!A${rowIndex}:I${rowIndex}`;
+  const values = [
+    [
+      order.id,
+      order.timestamp,
+      order.customerName,
+      order.contactInfo,
+      JSON.stringify(order.products),
+      JSON.stringify(order.sizes),
+      JSON.stringify(order.quantities),
+      order.status,
+      JSON.stringify(order.itemStatuses || order.products.map(() => 'Pending')),
+    ]
+  ];
+
+  const response = await fetch(`${BASE_URL}/values/${range}?valueInputOption=USER_ENTERED`, {
+    method: 'PUT',
+    headers: getHeaders(token),
+    body: JSON.stringify({ values }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData?.error?.message || "Failed to update order");
   }
 
   return response.json();

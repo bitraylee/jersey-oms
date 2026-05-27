@@ -122,7 +122,7 @@ export default function NewOrder({ token }) {
             <h3 className="text-sm font-semibold text-slate-800 uppercase tracking-wider">Customer Details</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">For (Customer Name)</label>
                 <input 
                   type="text" 
                   value={customerName}
@@ -133,12 +133,12 @@ export default function NewOrder({ token }) {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Contact Info</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Ordered By</label>
                 <input 
                   type="text" 
                   value={contactInfo}
                   onChange={e => setContactInfo(e.target.value)}
-                  placeholder="Email or Phone"
+                  placeholder="e.g. Me, Co-dev Name"
                   className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
